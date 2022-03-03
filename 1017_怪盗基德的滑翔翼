@@ -1,0 +1,30 @@
+
+//XBD
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+    int Loop, n,p, fr[1000] = {0}, a[1000] = {0}, fd[1000] = {0}, ansr = 0, ansd = 0;
+    cin >> Loop;
+    int result[Loop] = {0};
+    for(int i = 1;i <= Loop;i++){
+        cin >> n;
+        for(int j = 1;j <= n; j++)
+            cin >> a[j],fr[j] = fd[j] = 1;
+            for(int x = 1;x <= n;x++)
+                for( p = 1;p < x;p++){
+                if(a[p] < a[x]) fr[x] = max(fr[x],fr[p] + 1);
+                if(a[p] > a[x]) fd[x] = max(fd[x],fd[p] + 1);
+                }
+        for(int x = 1;x <= n;x++)
+            ansr = max(ansr,fr[x]);
+        for(int x= 1; x <= n;x++)
+            ansd = max(ansd,fd[x]);
+        result[i - 1] = max(ansr,ansd);
+    fr[1000] = {0},fd[1000] = {0},a[1000] = {0}, ansd = 0,ansr = 0;
+    }
+    for(int i = 0;i < Loop;i++)
+        cout << result[i] <<endl;
+}
