@@ -1,0 +1,72 @@
+
+//XBD
+#include <iostream>
+
+using namespace std;
+
+const int N = 100010;
+int n;
+int e[N], ne[N], head, idx;
+//e[]是用来存链表中数据的，ne[]存的是当前指针指向的下一个节点的坐标值
+//idx表示链表下标
+
+
+void init()
+{
+    head = -1;
+    idx = 0;
+}
+
+//将x插入到头节点上
+void int_to_head(int x)
+{
+    e[idx] = x;
+    ne[idx] = head;//head作为一个指针指向空节点,现在给ne[idx]了
+    head = idx;     //现在head指向第一个元素
+    idx ++;
+}
+
+//将x插入到下标为k的点后面
+void add(int k, int x)
+{
+    e[idx] = x;
+    ne[idx] = ne[k];
+    ne[k] = idx;
+    idx ++;
+}
+
+//将下标是k的点后面的点删掉
+void remove(int k)
+{
+    ne[k] = ne[ne[k]];
+}
+
+int main()
+{
+    cin >> n;
+    init();
+    for(int i = 0; i < n; i++){
+        char s;
+        cin >> s;
+        if(s == 'H'){
+            int x;
+            cin >> x;
+            int_to_head(x);
+        }
+        if(s == 'D'){
+            int k;
+            cin >> k;
+            if(k == 0) head = ne[head];//删除头节点
+            else remove(k - 1);
+        }
+        if(s == 'I'){
+            int k,x;
+            cin >> k >> x;
+            add(k - 1, x);
+        }
+    }
+    for(int i = head; i != -1; i =ne[i])
+        cout << e[i] << " ";
+    cout<<endl;
+    return 0;
+}
